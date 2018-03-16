@@ -6,7 +6,8 @@ class Tablero extends React.Component {
         super(props);
         this.state = {
             tablero: this.crearTablero(),
-            jugadaActual: {}
+            jugada1: -1,
+            jugada2: -1
         }
     }
 
@@ -31,7 +32,6 @@ class Tablero extends React.Component {
             for (let indexY = 0; indexY < this.props.rows; indexY++) {
                 const valorCarta = this.obtenerCarta(paresACrear);
                 tempTableroHTML.push(valorCarta);
-                //tempTableroHTML.push(<Carta valor={valorCarta} key={indexX + indexY + ''} parentMethod={this.metodoParaCarta} wea={this.state.wea}/>);
             }
         }
         return tempTableroHTML;
@@ -46,8 +46,18 @@ class Tablero extends React.Component {
         return respuesta;
     }
 
-    fuiClickeado = (valor)=>{
-        console.log('clickeado : ' + valor);
+    fuiClickeado = (valor) => {
+        if (this.state.jugada1 === -1){
+            this.setState({
+                jugada1: valor
+            });
+        }else if (this.state.jugada2 === -1){
+            this.setState({
+                jugada2: valor
+            });
+        }
+        console.log(this.state.jugada1);
+        console.log(this.state.jugada2);
     }
 
 
@@ -57,7 +67,7 @@ class Tablero extends React.Component {
                 {
                     this.state.tablero.map(
                         (item) => {
-                            return <Carta valor={item} key={item + Math.random()} toDo={this.fuiClickeado.bind(this)}/>
+                            return <Carta valor={item} key={item + Math.random()} toDo={this.fuiClickeado.bind(this)} />
                         }
                     )
                 }
